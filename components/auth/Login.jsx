@@ -2,7 +2,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authAPI } from '@/services/auth.service';
+import toast from 'react-hot-toast';
 // import Cookies from 'js-cookie';
+import { Eye, EyeOff } from "lucide-react";
+import { setToken } from '@/utils/setToken';
 
 export default function LoginForm() {
     const router = useRouter();
@@ -15,6 +18,7 @@ export default function LoginForm() {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState('');
+        const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,7 +51,7 @@ export default function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setApiError('');
+        setApiError();
 
         if (!validateForm()) {
             return;
@@ -57,21 +61,33 @@ export default function LoginForm() {
 
         try {
             const response = await authAPI.signIn(formData);
-            if (response.accessToken) {
+
+            console.log(response)
+            // setToken(res.data.accessToken);
+        
+            if (response.data.accessToken) {
+
+                 
                 // Cookies.set('token', response.accessToken, { expires: 7, secure: true, sameSite: 'strict' });
                 // Cookies.set('refresh_token', response.refreshToken, { expires: 30, secure: true, sameSite: 'strict' });
-                localStorage.setItem('token', response.accessToken);
+                localStorage.setItem('token', response.data.accessToken);
+                      setFormData({
+            email: '',
+            password: ''
+        });
             }
             router.push('/admin/dashboard');
+            toast.success("Login successfully")
         } catch (error) {
             setApiError(error.message || 'Sign in failed. Please check your credentials.');
+            toast.warn('sign in failed')
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full">
                 {/* Card Container */}
                 <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border border-white/20">
@@ -109,23 +125,41 @@ export default function LoginForm() {
                                 {errors.email && <p className="mt-1.5 ml-1 text-xs font-medium text-red-500">{errors.email}</p>}
                             </div>
 
-                            {/* Password Field */}
-                            <div className="relative">
-                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">
-                                    Password
-                                </label>
-                                <input
-                                    name="password"
-                                    type="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    className={`block w-full px-4 py-3.5 bg-gray-50/50 border ${errors.password ? 'border-red-500' : 'border-gray-200'} rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400`}
-                                    placeholder="••••••••"
-                                />
-                                {errors.password && <p className="mt-1.5 ml-1 text-xs font-medium text-red-500">{errors.password}</p>}
-                            </div>
-                        </div>
+                        {/* Password Field */}
+<div className="relative">
+    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">
+        Password
+    </label>
 
+    <div className="relative">
+        <input
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            className={`block w-full px-4 py-3.5 pr-12 bg-gray-50/50 border ${
+                errors.password ? 'border-red-500' : 'border-gray-200'
+            } rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400`}
+            placeholder="••••••••"
+        />
+
+        {/* Eye Toggle */}
+        <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+        </button>
+    </div>
+
+    {errors.password && (
+        <p className="mt-1.5 ml-1 text-xs font-medium text-red-500">
+            {errors.password}
+        </p>
+    )}
+</div>
+</div>
                         <div>
                             <button
                                 type="submit"

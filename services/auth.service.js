@@ -24,4 +24,14 @@ export const authAPI = {
       localStorage.removeItem("user");
     }
   },
+
+  getCurrentUser: async () => {
+ 
+
+  const res = await api.get("/auth/me", {
+    "Content-Type": "multipart/form-data",
+  });
+
+  return res.data;
+}
 };

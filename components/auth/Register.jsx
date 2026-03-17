@@ -1,3 +1,4 @@
+// 
 'use client';
 
 import { useState } from 'react';
@@ -6,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterForm() {
     const router = useRouter();
@@ -19,6 +21,7 @@ export default function RegisterForm() {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -61,6 +64,7 @@ export default function RegisterForm() {
             toast.success("Signup success")
         } catch (error) {
             setApiError(error.message || 'Registration failed. Please try again.');
+            toast.warn("registered failed")
         } finally {
             setLoading(false);
         }
@@ -81,19 +85,20 @@ export default function RegisterForm() {
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center bg-[#0f172a] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-900 via-slate-900 to-black p-6">
+        <section className="min-h-screen flex items-center justify-center bg-white p-6">
             <motion.div
-                className="max-w-md w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                className="max-w-md w-full bg-white border border-blue-100 rounded-[2.5rem] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
+
                 {/* Header */}
                 <motion.div variants={fieldVariants} className="text-center mb-10">
-                    <h2 className="text-4xl font-black text-white tracking-tight mb-3">Join Us</h2>
-                    <p className="text-slate-400 font-medium">
+                    <h2 className="text-4xl font-black text-black tracking-tight mb-3">Join Us</h2>
+                    <p className="text-gray-500 font-medium">
                         Already a member?{' '}
-                        <Link href="/login" className="text-blue-400 hover:text-blue-300 underline underline-offset-4 transition-colors">
+                        <Link href="/login" className="text-blue-600 hover:text-blue-500 underline underline-offset-4 transition-colors">
                             Sign in
                         </Link>
                     </p>
@@ -104,17 +109,18 @@ export default function RegisterForm() {
                     <motion.div 
                         initial={{ opacity: 0, height: 0 }} 
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="rounded-2xl bg-red-500/10 border border-red-500/20 p-4 mb-6"
+                        className="rounded-2xl bg-red-100 border border-red-200 p-4 mb-6"
                     >
-                        <p className="text-sm font-semibold text-red-400 text-center">{apiError}</p>
+                        <p className="text-sm font-semibold text-red-500 text-center">{apiError}</p>
                     </motion.div>
                 )}
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
+
                     {/* Username */}
                     <motion.div variants={fieldVariants}>
-                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">
                             Username
                         </label>
                         <input
@@ -122,15 +128,15 @@ export default function RegisterForm() {
                             type="text"
                             value={formData.username}
                             onChange={handleChange}
-                            className={`w-full px-5 py-4 bg-white/5 border ${errors.username ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300`}
+                            className={`w-full px-5 py-4 bg-white border ${errors.username ? 'border-red-500' : 'border-gray-300'} rounded-2xl text-black placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300`}
                             placeholder="johndoe"
                         />
-                        {errors.username && <p className="mt-2 ml-1 text-xs font-medium text-red-400">{errors.username}</p>}
+                        {errors.username && <p className="mt-2 ml-1 text-xs font-medium text-red-500">{errors.username}</p>}
                     </motion.div>
 
                     {/* Email */}
                     <motion.div variants={fieldVariants}>
-                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">
                             Email Address
                         </label>
                         <input
@@ -138,26 +144,42 @@ export default function RegisterForm() {
                             type="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className={`w-full px-5 py-4 bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300`}
+                            className={`w-full px-5 py-4 bg-white border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-2xl text-black placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300`}
                             placeholder="name@example.com"
                         />
-                        {errors.email && <p className="mt-2 ml-1 text-xs font-medium text-red-400">{errors.email}</p>}
+                        {errors.email && <p className="mt-2 ml-1 text-xs font-medium text-red-500">{errors.email}</p>}
                     </motion.div>
 
                     {/* Password */}
                     <motion.div variants={fieldVariants}>
-                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">
                             Password
                         </label>
-                        <input
-                            name="password"
-                            type="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className={`w-full px-5 py-4 bg-white/5 border ${errors.password ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300`}
-                            placeholder="••••••••"
-                        />
-                        {errors.password && <p className="mt-2 ml-1 text-xs font-medium text-red-400">{errors.password}</p>}
+
+                        <div className="relative">
+                            <input
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                value={formData.password}
+                                onChange={handleChange}
+                                className={`w-full px-5 py-4 pr-12 bg-white border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-2xl text-black placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300`}
+                                placeholder="••••••••"
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
+
+                        {errors.password && (
+                            <p className="mt-2 ml-1 text-xs font-medium text-red-500">
+                                {errors.password}
+                            </p>
+                        )}
                     </motion.div>
 
                     {/* Submit Button */}
@@ -174,7 +196,7 @@ export default function RegisterForm() {
                                     <>
                                         <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
                                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                         </svg>
                                         Processing...
                                     </>
@@ -184,6 +206,7 @@ export default function RegisterForm() {
                             </span>
                         </motion.button>
                     </motion.div>
+
                 </form>
             </motion.div>
         </section>

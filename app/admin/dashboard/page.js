@@ -1,9 +1,12 @@
+import React from 'react'
+import DashboardPage from './dashboard/page'
 
-export default function DashboardPage() {
-    return (
-        <div>
-            <h1>Dashboard</h1>
-            <p>Welcome to the dashboard! Here you can find an overview of your activities and statistics.</p>
-        </div>
-    );
+const page = () => {
+  return (
+    <>
+    <DashboardPage/>
+    </>
+  )
 }
+
+export default page

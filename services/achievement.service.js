@@ -3,7 +3,7 @@ import api from "./api";
 export const acheivementAPI = {
 
   createachievment: async (formData) => {
-    const res = await api.post("/project/create", formData, {
+    const res = await api.post("/achievement/create", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -13,7 +13,7 @@ export const acheivementAPI = {
   },
 
   updateachievement: async (formData, id) => {
-    const res = await api.put(`/project/${id}`, formData, {
+    const res = await api.put(`/achievment/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -23,12 +23,13 @@ export const acheivementAPI = {
   },
 
   getAllacheivement: async () => {
-    const res = await api.get("/project");
+    const res = await api.get("/achievement");
+    console.log(res)
     return res.data;
   },
 
   deleteachievement: async (id) => {
-    const res = await api.delete(`/project/${id}`);
+    const res = await api.delete(`/achievement/${id}`);
     return res.data;
   },
 };

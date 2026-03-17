@@ -6,6 +6,7 @@ export default function AchievementCard({
   handleEdit,
   handleDeleteConfirmation
 }) {
+  const IMAGE_URL=PROCESS.ENV.IMAGE_URL
 
 return(
 
@@ -18,7 +19,7 @@ return(
 {portfolio.image && (
 
 <img
-src={`${API_URL}/uploads/${portfolio.image}`}
+src={`${IMAGE_URL}/uploads/${portfolio.image}`}
 alt={portfolio.title}
 className="w-full h-full object-cover hover:scale-105 transition duration-300"
 />
