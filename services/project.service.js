@@ -35,7 +35,7 @@ export const projectAPI = {
     return res.data;
   },
    getPortfolioById: async (id) => {
-    const res = await api.patch(`/project/${id}`);
+    const res = await api.get(`/project/${id}`);
     return res.data;
   },
 };

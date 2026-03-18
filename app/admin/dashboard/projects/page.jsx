@@ -116,7 +116,6 @@ export default function PortfolioManager() {
     const fetchPortfolios = async () => {
         try {
             const response = await projectAPI.getAllPortfolios();
-            console.log(response)
             setPortfolios(response.data);
         } catch (error) {
             console.error("Failed to fetch portfolios:", error);

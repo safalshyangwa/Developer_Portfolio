@@ -1,7 +1,6 @@
 import api from "./api";
 
 export const acheivementAPI = {
-
   createachievment: async (formData) => {
     const res = await api.post("/achievement/create", formData, {
       headers: {
@@ -24,7 +23,11 @@ export const acheivementAPI = {
 
   getAllacheivement: async () => {
     const res = await api.get("/achievement");
-    console.log(res)
+    res;
+    return res.data;
+  },
+  getAllacheivmentById: async (id) => {
+    const res = await api.get(`/achievement/${id}`);
     return res.data;
   },
 

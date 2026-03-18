@@ -12,8 +12,8 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name:'About', href:'/about' },
     { name: 'Projects', href: '/projects' },
-    { name:'Achievements', href:'/achievements' },
-    { name:'Blogs', href:'/blog' },
+    { name:'Achievements', href:'/achievments' },
+    { name:'Blogs', href:'/blogs' },
     { name: 'Admin', href: '/login' },
   ];
 
@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
     <nav
       style={{ opacity }} // Apply dynamic opacity
-      className="fixed w-full z-50 top-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-opacity duration-300"
+      className="fixed w-full z-50 top-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-opacity duration-300 mb-20"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">

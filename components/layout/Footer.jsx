@@ -5,14 +5,26 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: <Github size={20} />, href: "https://github.com", label: "GitHub" },
-    { icon: <Linkedin size={20} />, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: <Twitter size={20} />, href: "https://twitter.com", label: "Twitter" },
-    { icon: <Mail size={20} />, href: "safalshyangwa@gmail.com", label: "Email" },
+    {
+      icon: <Github size={20} />,
+      href: "https://github.com/safalshyangwa",
+      label: "GitHub",
+    },
+    {
+      icon: <Linkedin size={20} />,
+      href: "https://www.linkedin.com/in/safal-shyangwa",
+      label: "LinkedIn",
+    },
+
+    {
+      icon: <Mail size={20} />,
+      href: "mailto:safalshyangwa001@gmail.com", // 👈 use mailto:
+      label: "Email",
+    },
   ];
 
   return (
-    <footer className="bg-slate-900 border-t border-slate-800 text-slate-400 py-12">
+    <footer className="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 mt-5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
           

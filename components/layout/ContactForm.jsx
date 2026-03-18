@@ -19,7 +19,7 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form)
+    (form)
     const res = await contactAPI.contact(form);
     toast.success("message sent ")
   };

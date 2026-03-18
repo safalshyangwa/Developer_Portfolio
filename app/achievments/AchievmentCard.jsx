@@ -7,32 +7,54 @@ export default function AcheivmentCard({ achievment }) {
   if (!achievment) return null;
 
   return (
-    <Link href={`/blogs/${achievment._id}`}>
-      {/* Motion div with hover animation */}
+    <Link href={`/achievments/${achievment._id}`}>
       <motion.div
-        whileHover={{ scale: 1.05 }}  // slightly grow on hover
-        whileTap={{ scale: 0.95 }}    // shrink on tap/click
-        className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow hover:shadow-xl transition cursor-pointer"
+        whileHover="hover"
+        initial="rest"
+        animate="rest"
+        className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-lg cursor-pointer"
       >
-        {/* Project Image */}
-        {achievment.image && (
-          <img
-            src={`http://localhost:8000/uploads/${achievment.image}`}
-            alt={achievment.title}
-            className="w-full h-48 object-cover"
-          />
-        )}
+        {/* Image Container */}
+        <div className="relative h-52 overflow-hidden">
+          {achievment.image && (
+            <motion.img
+              src={`http://localhost:8000/uploads/${achievment.image}`}
+              alt={achievment.title}
+              className="w-full h-full object-cover"
+              variants={{
+                rest: { scale: 1 },
+                hover: { scale: 1.15 },
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            />
+          )}
 
-        <div className="p-5">
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition" />
+        </div>
+
+        {/* Content */}
+        <motion.div
+          variants={{
+            rest: { y: 0 },
+            hover: { y: -8 },
+          }}
+          transition={{ duration: 0.3 }}
+          className="p-5"
+        >
           {/* Title */}
-          <h2 className="text-xl font-semibold mb-2">{achievment.title}</h2>
+          <h2 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+            {achievment.title}
+          </h2>
 
           {/* Description */}
-          <p className="text-gray-400 text-sm mb-4">{achievment.description}</p>
+          <p className="text-gray-400 text-sm line-clamp-2">
+            {achievment.description}
+          </p>
+        </motion.div>
 
-          {/* Tech Stack */}
-          
-        </div>
+        {/* Glow Effect */}
+        <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-white/20 transition pointer-events-none" />
       </motion.div>
     </Link>
   );

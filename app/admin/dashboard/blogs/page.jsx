@@ -5,9 +5,10 @@
 
 import { blogAPI } from '@/services/blog.service';
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 export default function BlogManager() {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  
 
     const [blogs, setBlogs] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -50,57 +51,83 @@ export default function BlogManager() {
         setErrors({});
     };
 
-    /* Handle Create or Update */
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        if (!validateForm()) return;
 
-        setLoading(true);
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
-        try {
-            let requestPayload = new FormData();
-            requestPayload.append("title", formData.title);
-            requestPayload.append("description", formData.description);
-          
+   if (!validateForm()) return;
 
-            if (typeof formData.image === "object") {
-                requestPayload.append("image", formData.image);
-            }
+   const toastId = toast.loading(
+     isEditing ? "Updating blog..." : "Creating blog...",
+   );
 
-            if (isEditing) {
-                await blogAPI.updateblog(requestPayload, formData._id);
-                alert("blog updated successfully!");
-            } else {
-                await blogAPI.createblog(requestPayload);
-                alert("blog created successfully!");
-            }
+   setLoading(true);
 
-            resetForm();
-            fetchblogs();
-        } catch (error) {
-            alert("Operation failed: " + error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+   try {
+     const requestPayload = new FormData();
+     requestPayload.append("title", formData.title);
+     requestPayload.append("description", formData.description);
 
+     if (typeof formData.image === "object") {
+       requestPayload.append("image", formData.image);
+     }
+
+     if (isEditing) {
+       await blogAPI.updateblog(requestPayload, formData._id);
+       toast.success("Blog updated successfully ", { id: toastId });
+     } else {
+       await blogAPI.createblog(requestPayload);
+       toast.success("Blog created successfully ", { id: toastId });
+     }
+
+     resetForm();
+     fetchblogs();
+   } catch (error) {
+     toast.error(
+       error?.response?.data?.message ||
+         error.message ||
+         "Something went wrong ",
+       { id: toastId },
+     );
+   } finally {
+     setLoading(false);
+   }
+ };
+
+    
+    
+    
+    
+    
+    
+    
+    
     /* Prepare form for editing */
-    const handleEdit = (blog) => {
-        setFormData({
-            title: blog.title || '',
-            description: blog.description || '',
-            image: ''
-        });
 
-        if (blog.image) {
-            setObjectUrl(`${API_URL}/uploads/${portfolio.blog}`);
-        }
+   const handleEdit = (blog) => {
+     if (!blog) {
+       toast.error("Invalid blog data ");
+       return;
+     }
 
-        setIsEditing(true);
-        setShowForm(true);
-    };
+     setFormData({
+       title: blog.title || "",
+       description: blog.description || "",
+       image: "",
+     });
 
+     if (blog.image) {
+       setObjectUrl(`http://localhost:8000/uploads/${blog.image}`);
+     } else {
+       setObjectUrl(null);
+     }
+
+     setIsEditing(true);
+     setShowForm(true);
+
+     toast.success(`Editing "${blog.title}" `);
+   };
     // Validate form
     const validateForm = () => {
         const newErrors = {};
@@ -114,27 +141,58 @@ export default function BlogManager() {
     const fetchblogs = async () => {
         try {
             const response = await blogAPI.getAllblogs();
-            console.log(response)
             setBlogs(response.data);
         } catch (error) {
             console.error("Failed to fetch blogs:", error);
         }
     };
 
-    const handleDelete = async (id) => {
-        try {
-            await blogAPI.deleteblog(id);
-            alert("blog deleted successfully!");
-            fetchblogs();
-        } catch (error) {
-            alert("Unable to delete blog: " + error);
-        }
-    };
+const handleDelete = async (id) => {
+  const toastId = toast.loading("Deleting blog... ");
+
+  try {
+    await blogAPI.deleteblog(id);
+
+    toast.success("Blog deleted successfully ", { id: toastId });
+
+    fetchblogs();
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || error.message || "Failed to delete ",
+      { id: toastId },
+    );
+  }
+};
 
     const handleDeleteConfirmation = (blog) => {
-        if (window.confirm(`Are you sure you want to delete "${blog.title}"?`)) {
-            handleDelete(blog._id);
-        }
+      toast.custom((t) => (
+        <div className="bg-slate-900 text-white p-4 rounded-xl shadow-lg border border-slate-700 w-[300px]">
+          <p className="text-sm mb-3">
+            Delete{" "}
+            <span className="font-semibold text-red-400">"{blog.title}"</span>?
+          </p>
+
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="px-3 py-1 text-sm bg-slate-700 rounded hover:bg-slate-600 transition"
+            >
+              Cancel
+            </button>
+
+            <button
+              onClick={() => {
+                handleDelete(blog._id);
+                toast.dismiss(t.id);
+                toast.success("Blog deleted successfully ");
+              }}
+              className="px-3 py-1 text-sm bg-red-500 rounded hover:bg-red-600 transition"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ));
     };
 
     useEffect(() => {

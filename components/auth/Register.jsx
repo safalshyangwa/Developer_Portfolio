@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff } from "lucide-react";
+import { setToken } from '@/utils/setToken';
 
 export default function RegisterForm() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function RegisterForm() {
         username: '',
         email: '',
         password: '',
+        avatar:''
     });
 
     const [errors, setErrors] = useState({});
@@ -57,8 +59,9 @@ export default function RegisterForm() {
             const { ...registrationData } = formData;
             const response = await authAPI.register(registrationData);
             if (response.token) {
-                localStorage.setItem('token', response.token);
-                localStorage.setItem('user', JSON.stringify(response.user));
+                // localStorage.setItem('token', response.token);
+                setToken(response.token.accessToken)
+                // localStorage.setItem('user', JSON.stringify(response.user));
             }
             router.push('/admin/dashboard');
             toast.success("Signup success")
