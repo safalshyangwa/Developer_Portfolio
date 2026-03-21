@@ -1,13 +1,15 @@
-import LoginForm from '@/components/auth/Login'
+"use client";
 
-import React from 'react'
+import LoginForm from "@/components/auth/Login";
+
+import React from "react";
 
 const page = () => {
   return (
-  <>
-<LoginForm/>
-  </>
-  )
-}
+    <>
+      <LoginForm />
+    </>
+  );
+};
 
-export default page
+export default page;

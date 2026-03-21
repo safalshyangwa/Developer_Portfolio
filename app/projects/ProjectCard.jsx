@@ -35,7 +35,7 @@ export default function ProjectCard({ project }) {
           )}
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition" />
+          <div className="absolute inset-0 bg-linear-to from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition" />
         </div>
 
         {/* Content */}

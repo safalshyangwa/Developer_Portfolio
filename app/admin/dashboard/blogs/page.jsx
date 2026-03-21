@@ -17,7 +17,8 @@ export default function BlogManager() {
     const [errors, setErrors] = useState({});
     const [objectUrl, setObjectUrl] = useState("");
 
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+        id:'',
         title: '',
         description: '',
         image: ''
@@ -40,7 +41,8 @@ export default function BlogManager() {
 
     /* Reset form state */
     const resetForm = () => {
-        setFormData({
+      setFormData({
+          id:'',
             title: '',
             description: '',
             image: ''
@@ -55,6 +57,7 @@ export default function BlogManager() {
 
  const handleSubmit = async (e) => {
    e.preventDefault();
+   console.log(formData)
 
    if (!validateForm()) return;
 
@@ -74,7 +77,8 @@ export default function BlogManager() {
      }
 
      if (isEditing) {
-       await blogAPI.updateblog(requestPayload, formData._id);
+       console.log(formData.id)
+       await blogAPI.updateblog(requestPayload, formData.id);
        toast.success("Blog updated successfully ", { id: toastId });
      } else {
        await blogAPI.createblog(requestPayload);
@@ -110,8 +114,10 @@ export default function BlogManager() {
        toast.error("Invalid blog data ");
        return;
      }
-
+   
+   
      setFormData({
+       id:blog._id,
        title: blog.title || "",
        description: blog.description || "",
        image: "",
@@ -126,7 +132,7 @@ export default function BlogManager() {
      setIsEditing(true);
      setShowForm(true);
 
-     toast.success(`Editing "${blog.title}" `);
+    
    };
     // Validate form
     const validateForm = () => {
@@ -184,7 +190,7 @@ const handleDelete = async (id) => {
               onClick={() => {
                 handleDelete(blog._id);
                 toast.dismiss(t.id);
-                toast.success("Blog deleted successfully ");
+             
               }}
               className="px-3 py-1 text-sm bg-red-500 rounded hover:bg-red-600 transition"
             >
@@ -287,7 +293,8 @@ const handleDelete = async (id) => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {Array.isArray(blogs) && blogs.map((blog) => (
+              {Array.isArray(blogs) && blogs.map((blog) => (
+                            
                             <tr key={blog._id}>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     {blog.image && (

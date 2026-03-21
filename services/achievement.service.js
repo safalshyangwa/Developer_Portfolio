@@ -12,7 +12,7 @@ export const acheivementAPI = {
   },
 
   updateachievement: async (formData, id) => {
-    const res = await api.put(`/achievment/${id}`, formData, {
+    const res = await api.put(`/achievement/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

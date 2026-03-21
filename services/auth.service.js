@@ -12,12 +12,10 @@ export const authAPI = {
   },
 
   signIn: async (credentials) => {
-  const res = await api.post("/auth/signin", credentials);
+    const res = await api.post("/auth/signin", credentials);
+    console.log(res.data)
 
-  console.log("FULL RESPONSE:", res.data); 
-  console.log("TOKEN VALUE:", res.data.token); 
-
-  setToken(res.data.token);
+  setToken(res.data.data.accessToken);
 
   return res.data;
 },

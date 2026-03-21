@@ -40,7 +40,7 @@ const Navbar = () => {
           {/* Logo / Title */}
           <div className="shrink-0">
             <Link href="/" className="text-xl font-bold bg-linear-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-              DevPortfolio
+              Safal lama
             </Link>
           </div>
 

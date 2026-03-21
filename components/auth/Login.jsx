@@ -61,19 +61,20 @@ export default function LoginForm() {
 
     try {
       const response = await authAPI.signIn(formData);
+      console.log(response.data)
 
-      // setToken(res.data.accessToken);
-
-      if (response.data.accessToken) {
-        // Cookies.set('token', response.accessToken, { expires: 7, secure: true, sameSite: 'strict' });
-        // Cookies.set('refresh_token', response.refreshToken, { expires: 30, secure: true, sameSite: 'strict' });
+      if (response?.data.accessToken) {
+        
         setToken(response.data.accessToken);
         setFormData({
           email: "",
           password: "",
         });
+      } else {
+        throw new Error("Login succeeded but accessToken is missing");
       }
-      router.push("/admin/dashboard");
+
+      router.push("/admin/dashboard/projects");
       toast.success("Login successfully");
     } catch (error) {
       setApiError(
@@ -199,7 +200,7 @@ export default function LoginForm() {
           </form>
         </div>
 
-        {/* Footer Link (Visual only) */}
+        {/* Footer Link (Visual only)
         <p className="mt-8 text-center text-sm text-gray-600">
           Don't have an account?{" "}
           <a
@@ -208,7 +209,7 @@ export default function LoginForm() {
           >
             Create an account
           </a>
-        </p>
+        </p> */}
       </div>
     </div>
   );

@@ -1,27 +1,28 @@
 @import "tailwindcss";
-body{
- background:#020617;
- 
+
+body {
+    background: #020617;
+
 }
 
-.card{
- @apply bg-slate-900 border border-slate-800 rounded-xl p-6;
+.card {
+    @apply bg-slate-900 border border-slate-800 rounded-xl p-6;
 }
 
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
+    0% {
+        transform: translateY(0px);
+    }
 
-  50% {
-    transform: translateY(-20px);
-  }
+    50% {
+        transform: translateY(-20px);
+    }
 
-  100% {
-    transform: translateY(0px);
-  }
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .float {
-  animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
 }

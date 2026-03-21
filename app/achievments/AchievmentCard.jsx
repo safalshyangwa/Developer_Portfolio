@@ -19,7 +19,6 @@ export default function AcheivmentCard({ achievment }) {
           {achievment.image && (
             <motion.img
               src={`http://localhost:8000/uploads/${achievment.image}`}
-              alt={achievment.title}
               className="w-full h-full object-cover"
               variants={{
                 rest: { scale: 1 },
@@ -28,10 +27,9 @@ export default function AcheivmentCard({ achievment }) {
               transition={{ duration: 0.4, ease: "easeOut" }}
             />
           )}
+          </div>
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition" />
-        </div>
 
         {/* Content */}
         <motion.div

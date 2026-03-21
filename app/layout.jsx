@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -22,13 +21,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className='className="bg-slate-950 text-slate-50'
-      >
-        <Navbar/>
-        {children}
-         <Toaster position="top-right" />
-        <Footer/>
+      <body className="bg-slate-950 text-slate-50">
+        <LayoutWrapper>{children}</LayoutWrapper>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

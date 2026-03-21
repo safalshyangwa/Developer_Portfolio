@@ -19,7 +19,7 @@ const router=useRouter()
     removeToken();
     
     toast.success("Logout successfully")
- router.replace("/login");
+ router.replace("/");
   };
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const router=useRouter()
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute right-0 mt-3 w-56 bg-white border rounded-lg shadow-lg">
+        <div className="absolute right-0 bottom-full mb-3 w-56 bg-white border rounded-lg shadow-lg">
           {/* User Info */}
           <div className="px-4 py-3 border-b">
             <p className="text-sm font-semibold">{user?.username || "Admin"}</p>

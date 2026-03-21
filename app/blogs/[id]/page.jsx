@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; 
-import { projectAPI } from "@/services/project.service";
+
 import { blogAPI } from "@/services/blog.service";
 
 export default function BlogDetailPage() {
@@ -18,6 +18,7 @@ export default function BlogDetailPage() {
       try {
         setLoading(true);
         const res = await blogAPI.getAllblogById(id);
+        console.log(res.data)
         setblog(res.data);
       } catch (err) {
         console.error("Failed to fetch project:", err);

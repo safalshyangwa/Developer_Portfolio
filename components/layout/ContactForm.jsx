@@ -17,13 +17,17 @@ export default function Contact() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    (form)
-    const res = await contactAPI.contact(form);
-    toast.success("message sent ")
-  };
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
+   try {
+     const res = await contactAPI.contact(form);
+     toast.success("Message sent successfully!");
+   } catch (error) {
+     console.error(error);
+     toast.error("Failed to send message");
+   }
+ };
   // Motion variants
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },

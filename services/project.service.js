@@ -2,9 +2,7 @@ import api from "./api";
 
 
 export const projectAPI = {
-
   createPortfolio: async (formData) => {
-
     const res = await api.post("/project/create", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -15,6 +13,7 @@ export const projectAPI = {
   },
 
   updatePortfolio: async (formData, id) => {
+    console.log(id);
 
     const res = await api.put(`/project/${id}`, formData, {
       headers: {
@@ -34,7 +33,7 @@ export const projectAPI = {
     const res = await api.delete(`/project/${id}`);
     return res.data;
   },
-   getPortfolioById: async (id) => {
+  getPortfolioById: async (id) => {
     const res = await api.get(`/project/${id}`);
     return res.data;
   },

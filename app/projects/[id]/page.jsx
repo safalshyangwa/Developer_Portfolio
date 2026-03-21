@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; 
 import { projectAPI } from "@/services/project.service";
+import Link from "next/link";
 
 export default function ProjectDetailPage() {
  // destructure directly
  const params = useParams();
   const id = params?.id;
+  
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(true); // optional loading state
   const [error, setError] = useState(null); // optional error handling
@@ -17,7 +19,9 @@ export default function ProjectDetailPage() {
       try {
         setLoading(true);
         const res = await projectAPI.getPortfolioById(id);
+        console.log(res.data)
         setProject(res.data);
+   
       } catch (err) {
         console.error("Failed to fetch project:", err);
         setError("Failed to load project.");
@@ -61,6 +65,7 @@ export default function ProjectDetailPage() {
             </span>
           ))}
         </div>
+        <button><Link href="/projects">Back</Link></button>
       </div>
 
     </div>

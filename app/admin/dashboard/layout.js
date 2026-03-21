@@ -10,17 +10,15 @@ import {
 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import toast from "react-hot-toast";
 
 import { removeToken } from "@/utils/removeToken";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { authAPI } from "@/services/auth.service";
 
-
 export default function DashboardLayout({ children }) {
-  const [activeTab, setActiveTab] = useState("services");
+  const [activeTab, setActiveTab] = useState("Project");
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
@@ -29,19 +27,19 @@ export default function DashboardLayout({ children }) {
       name: "Project",
       href: "/admin/dashboard/projects",
       icon: Briefcase,
-      id: "portfolio",
+      id: "project",
     },
     {
       name: "Achievement",
       href: "/admin/dashboard/achievments",
       icon: Users,
-      id: "partners",
+      id: "Achievment",
     },
     {
       name: "Blog",
       href: "/admin/dashboard/blogs",
       icon: NewspaperIcon,
-      id: "contacts",
+      id: "Blog",
     },
   ];
 
@@ -53,11 +51,18 @@ export default function DashboardLayout({ children }) {
         setUser(res.data);
       } catch (error) {
         console.error("Failed to fetch user", error);
+        router.push("/login");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUser();
-  }, []);
+  }, [router]);
+
+  if (loading) {
+    return<div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -66,7 +71,7 @@ export default function DashboardLayout({ children }) {
         <div>
           {/* Logo */}
           <div className="p-6">
-            <h1 className="text-2xl font-bold text-blue-600">Agency Admin</h1>
+            <h1 className="text-2xl font-bold text-blue-600">safal Admin</h1>
           </div>
 
           {/* Navigation */}
@@ -93,7 +98,6 @@ export default function DashboardLayout({ children }) {
 
         {/* Logout Button */}
         <div className="p-4 border-t">
-          
           <ProfileDropdown user={user} />
         </div>
       </aside>

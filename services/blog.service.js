@@ -27,6 +27,7 @@ export const blogAPI = {
   },
   getAllblogById: async (id) => {
     const res = await api.get(`/blogs/${id}`);
+    
     return res.data;
   },
 

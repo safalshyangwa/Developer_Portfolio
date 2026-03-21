@@ -16,6 +16,7 @@ export default function AchievmentManager() {
     const [objectUrl, setObjectUrl] = useState("");
 
     const [formData, setFormData] = useState({
+        id:'',
         title: '',
         description: '',
         image: ''
@@ -39,6 +40,7 @@ export default function AchievmentManager() {
     /* Reset form state */
     const resetForm = () => {
         setFormData({
+            id:'',
             title: '',
             description: '',
         
@@ -69,11 +71,11 @@ export default function AchievmentManager() {
             }
 
             if (isEditing) {
-                await acheivementAPI.updateachievement(requestPayload, formData._id);
+                await acheivementAPI.updateachievement(requestPayload, formData.id);
                 toast.success("achievment updated successfully!");
             } else {
                 await acheivementAPI.createachievment(requestPayload);
-                toast.success("created successfully")
+                toast.success("created  achievment successfully")
             }
 
             resetForm();
@@ -88,10 +90,11 @@ export default function AchievmentManager() {
     /* Prepare form for editing */
     const handleEdit = (achievment) => {
         setFormData({
-            title: achievment.title || '',
-            description: achievment.description || '',
-       
-            image: ''
+          id: achievment._id,
+          title: achievment.title || "",
+          description: achievment.description || "",
+
+          image: "",
         });
 
         if (achievment.image) {
