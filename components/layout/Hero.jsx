@@ -1,13 +1,20 @@
-
-
-
 "use client";
-import Typewriter from 'typewriter-effect';
-import { motion } from 'framer-motion';
-import { ArrowRight, Download } from 'lucide-react';
-import  Link  from 'next/link';
+import Typewriter from "typewriter-effect";
+import { motion } from "framer-motion";
+import { ArrowRight, Download } from "lucide-react";
+import Link from "next/link";
 
 const Hero = () => {
+  // Programmatic download function for resume
+  const downloadResume = () => {
+    const link = document.createElement("a");
+    link.href = "/safalresume.pdf"; // file in public folder
+    link.download = "safalresume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 px-4">
       {/* Background Glow Effects */}
@@ -55,6 +62,7 @@ const Hero = () => {
 
           {/* Call to Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* View Projects Button */}
             <Link href="/projects">
               <button className="group flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-full transition-all duration-300 shadow-lg shadow-indigo-500/25 cursor-pointer">
                 View My Work
@@ -65,17 +73,14 @@ const Hero = () => {
               </button>
             </Link>
 
-            {/* Download Link - Ensure file is in /public/resume.pdf */}
-            <a
-              href="/safaresume.pdf"
-              download="safalresume.pdf"
-              target="_blank" // fallback for browsers that preview instead of download
-              rel="noopener noreferrer"
+            {/* Resume Download Button */}
+            <button
+              onClick={downloadResume}
               className="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-white px-8 py-4 rounded-full transition-all cursor-pointer"
             >
               Resume
               <Download size={18} />
-            </a>
+            </button>
           </div>
         </motion.div>
       </div>

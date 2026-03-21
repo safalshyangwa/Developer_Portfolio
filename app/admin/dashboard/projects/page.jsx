@@ -313,27 +313,31 @@ export default function PortfolioManager() {
 
       {/* Portfolio List */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full border-collapse table-auto">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
                 Thumbnail
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Title
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Description
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                techStack
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                TechStack
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
               </th>
             </tr>
           </thead>
+
           <tbody className="bg-white divide-y divide-gray-200">
             {portfolios?.map((portfolio) => (
               <tr key={portfolio._id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td className="px-4 py-3 text-sm text-gray-900 w-28">
                   {portfolio.image && (
                     <img
                       src={`http://localhost:8000/uploads/${portfolio.image}`}
@@ -342,25 +346,23 @@ export default function PortfolioManager() {
                     />
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   {portfolio.title}
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
+                <td className="px-4 py-3 text-sm text-gray-500 max-w-xs truncate">
                   {portfolio.description}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {portfolio.techStack?.map((tech, idx) => {
-                    return (
-                      <span
-                        key={idx}
-                        className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs mx-1"
-                      >
-                        {tech}
-                      </span>
-                    );
-                  })}
+                <td className="px-4 py-3 text-sm text-gray-500">
+                  {portfolio.techStack?.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs mx-1"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td className="px-4 py-3 text-sm font-medium text-right">
                   <button
                     onClick={() => handleEdit(portfolio)}
                     className="text-blue-600 hover:text-blue-900 mr-4"

@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; 
+import { useParams } from "next/navigation";
 
 import { blogAPI } from "@/services/blog.service";
 
 export default function BlogDetailPage() {
- // destructure directly
- const params = useParams();
+  // destructure directly
+  const params = useParams();
   const id = params?.id;
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true); // optional loading state
@@ -18,7 +18,6 @@ export default function BlogDetailPage() {
       try {
         setLoading(true);
         const res = await blogAPI.getAllblogById(id);
-        console.log(res.data)
         setblog(res.data);
       } catch (err) {
         console.error("Failed to fetch project:", err);
@@ -64,7 +63,6 @@ export default function BlogDetailPage() {
           ))}
         </div> */}
       </div>
-
     </div>
   );
 }

@@ -8,7 +8,7 @@ const About = () => {
   const skills = [
     "Next.js", "TypeScript", "Tailwind CSS", 
     "Node.js", "Framer Motion", "PostgreSQL",
-    "Python","C","Django","HTML","CSS"
+    "Python","C","Django","HTML","CSS","Express.js","shadcn"
   ];
 
   return (
@@ -40,7 +40,7 @@ const About = () => {
             
             {/* Floating Experience Badge */}
             <div className="absolute -bottom-6 -right-6 bg-slate-900 border border-slate-800 p-6 rounded-xl shadow-xl hidden lg:block">
-              <p className="text-3xl font-bold text-indigo-400">2+</p>
+              <p className="text-3xl font-bold text-indigo-400">1+</p>
               <p className="text-xs text-slate-400 uppercase tracking-widest">Years of Crafting</p>
             </div>
           </motion.div>
